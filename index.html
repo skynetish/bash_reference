@@ -1,0 +1,1094 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Bash Reference</title>
+    <style type="text/css">
+      body {
+        font-family:sans-serif;
+      }
+      myvar {
+        font-style:italic;
+        color:red;
+      }
+      myinput {
+        font-style:italic;
+        text-decoration:underline;
+        color:green;
+      }
+      table {
+        width:100%;
+      }
+      th.expression {
+        width: 420px;
+      }
+      th.test {
+        width: 150px;
+      }
+      th.meaning {
+        width: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><a href="http://www.gnu.org/software/bash/manual/bash.html">Bash Reference</a></h1>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Brace-Expansion">Brace Expansion</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><myinput>prefix</myinput>{<myinput>str1</myinput>,<myinput>str2</myinput>,<myinput>str3</myinput>}<myinput>suffix</myinput></td>
+          <td>Each string in braces, surrounded by <myinput>prefix</myinput> and <myinput>suffix</myinput></td>
+        </tr>
+        <tr>
+          <td><myinput>prefix</myinput>{<myinput>char1</myinput>..<myinput>char2</myinput>}<myinput>suffix</myinput>
+          <td>Each character from <myinput>char1</myinput> to <myinput>char2</myinput>, surrounded by <myinput>prefix</myinput> and <myinput>suffix</myinput></td>
+        </tr>
+        <tr>
+          <td><myinput>prefix</myinput>{<myinput>char1</myinput>..<myinput>char2</myinput>..<myinput>int</myinput>}<myinput>suffix</myinput>
+          <td>Each character from <myinput>char1</myinput> to <myinput>char2</myinput> in increments of <myinput>int</myinput>, surrounded by <myinput>prefix</myinput> and <myinput>suffix</myinput></td>
+        </tr>
+        <tr>
+          <td><myinput>prefix</myinput>{<myinput>int1</myinput>..<myinput>int2</myinput>}<myinput>suffix</myinput>
+          <td>Each integer from <myinput>int1</myinput> to <myinput>int2</myinput>, surrounded by <myinput>prefix</myinput> and <myinput>suffix</myinput> (leading 0 pads result)</td>
+        </tr>
+        <tr>
+          <td><myinput>prefix</myinput>{<myinput>int1</myinput>..<myinput>int2</myinput>..<myinput>int3</myinput>}<myinput>suffix</myinput>
+          <td>Each integer from <myinput>int1</myinput> to <myinput>int2</myinput> in increments of <myinput>int3</myinput>, surrounded by <myinput>prefix</myinput> and <myinput>suffix</myinput> (leading 0 pads result)</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Special-Parameters">Special Parameters</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><myvar>${<myinput>int</myinput>}</myvar></td>                             <td>Positional parameter <myinput>int</myinput> (0 or higher, <myvar>${0}</myvar> is executable name)</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${#}</myvar></td>                                                  <td>Number of positional parameters starting with <myvar>${1}</myvar></td></tr>
+        <tr><td><myvar>${#*}</myvar></td>                                                 <td>Number of positional parameters starting with <myvar>${1}</myvar></td></tr>
+        <tr><td><myvar>${#@}</myvar></td>                                                 <td>Number of positional parameters starting with <myvar>${1}</myvar></td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${*}</myvar></td>                                                  <td>Single string with positional parameters starting with <myvar>${1}</myvar></td></tr>
+        <tr><td><myvar>${*:<myinput>int</myinput>}</myvar></td>                           <td>Single string with positional parameters starting with <myvar>${<myinput>int</myinput>}</myvar></td></tr>
+        <tr><td><myvar>${*:<myinput>int1</myinput>:<myinput>int2</myinput>}</myvar></td>  <td>Single string with <myinput>int2</myinput> positional parameters starting with <myvar>${<myinput>int1</myinput>}</myvar></td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${@}</myvar></td>                                                  <td>Separate strings with positional parameters starting with <myvar>${<myinput>1</myinput>}</myvar></td></tr>
+        <tr><td><myvar>${@:<myinput>int</myinput>}</myvar></td>                           <td>Separate strings with positional parameters starting with <myvar>${<myinput>int</myinput>}</myvar></td></tr>
+        <tr><td><myvar>${@:<myinput>int1</myinput>:<myinput>int2</myinput>}</myvar></td>  <td>Separate strings with <myinput>int2</myinput> positional parameters starting with <myvar>${<myinput>int1</myinput>}</myvar></td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${?}</myvar></td>                                                  <td>Return value of previous command</td></tr>
+        <tr><td><myvar>${_}</myvar></td>                                                  <td>Last argument of previous command</td></tr>
+        <tr><td><myvar>${-}</myvar></td>                                                  <td>Active shell options (per set -o, same as $SHELLOPTS but in short format)</td></tr>
+        <tr><td><myvar>${$}</myvar></td>                                                  <td>PID current process</td></tr>
+        <tr><td><myvar>${!}</myvar></td>                                                  <td>PID of last job run in background</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Shell-Variables">Shell Variables</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><myvar>${HOME}</myvar></td>           <td>Home directory</td></tr>
+        <tr><td><myvar>${PATH}</myvar></td>           <td>Search path for executables</td></tr>
+        <tr><td><myvar>${CDPATH}</myvar></td>         <td>Search path for directories</td></tr>
+        <tr><td><myvar>${PWD}</myvar></td>            <td>Current working directory</td></tr>
+        <tr><td><myvar>${OLDPWD}</myvar></td>         <td>Previous working directory</td></tr>
+        <tr><td><myvar>${DIRSTACK}</myvar></td>       <td>Array containing directory stack</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${LINENO}</myvar></td>         <td>Current script or function line number</td></tr>
+        <tr><td><myvar>${FUNCNAME}</myvar></td>       <td>Array of functions in call stack</td></tr>
+        <tr><td><myvar>${BASH_LINENO}</myvar></td>    <td>Array of line numbers where $FUNCNAME entries were invoked</td></tr>
+        <tr><td><myvar>${BASH_SOURCE}</myvar></td>    <td>Array of files in which $FUNCNAME entries are defined</td></tr>
+        <tr><td><myvar>${FUNCNEST}</myvar></td>       <td>Max function nesting level (when exceeded shell aborts)</td></tr>
+        <tr><td><myvar>${SHLVL}</myvar></td>          <td>Shell nesting level</td></tr>
+        <tr><td><myvar>${BASH_SUBSHELL}</myvar></td>  <td>Subshell level</td></tr>
+        <tr><td><myvar>${PIPESTATUS}</myvar></td>     <td>Array of exit codes from latest foreground pipeline</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${COLUMNS}</myvar></td>        <td>Columns in terminal (if checkwinsize enabled)</td></tr>
+        <tr><td><myvar>${LINES}</myvar></td>          <td>Lines in terminal (if checkwinsize enabled)</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${BASH_VERSION}</myvar></td>   <td>Bash version</td></tr>
+        <tr><td><myvar>${SHELLOPTS}</myvar></td>      <td>Enabled shell options (per set -o, same options as $- but in text format)</td></tr>
+        <tr><td><myvar>${BASHOPTS}</myvar></td>       <td>Enabled bash options (in text format)</td></tr>
+        <tr><td><myvar>${BASH_ALIASES}</myvar></td>   <td>Associative array of aliases (editable)</td></tr>
+        <tr><td><myvar>${PPID}</myvar></td>           <td>Parent process ID</td></tr>
+        <tr><td><myvar>${BASHPID}</myvar></td>        <td>Bash process PID (sometimes differs from $$ in subshells)</td></tr>
+        <tr><td><myvar>${IFS}</myvar></td>            <td>Internal field separator (contains delimiters for word splitting)</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${PS1}</myvar></td>            <td>Primary prompt</td></tr>
+        <tr><td><myvar>${PS2}</myvar></td>            <td>Secondary prompt</td></tr>
+        <tr><td><myvar>${PS3}</myvar></td>            <td>Prompt for select command (default: "#? ")</td></tr>
+        <tr><td><myvar>${PS4}</myvar></td>            <td>Prompt for debugging output from xtrace (set -x) (default: "+ ")</td></tr>
+        <tr><td><myvar>${PROMPT_COMMAND}</myvar></td> <td>Command to execute before printing primary prompt ($PS1)</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${SECONDS}</myvar></td>        <td>Seconds since shell was invoked</td></tr>
+        <tr><td><myvar>${RANDOM}</myvar></td>         <td>Random number in 0-32767 (uint15)</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${OSTYPE}</myvar></td>         <td>OS type</td></tr>
+        <tr><td><myvar>${MACHTYPE}</myvar></td>       <td>CPU-company-system</td></tr>
+        <tr><td><myvar>${HOSTTYPE}</myvar></td>       <td>CPU type</td></tr>
+        <tr><td><myvar>${HOSTNAME}</myvar></td>       <td>Hostname</td></tr>
+        <tr><td><br></td><td><br></td></tr>
+        <tr><td><myvar>${LANG}</myvar></td>           <td>Default locale</td></tr>
+        <tr><td><myvar>${LC_...}</myvar></td>         <td>Locale settings</td></tr>
+        <tr><td><myvar>${COMP...}</myvar></td>        <td>Command completion stuff</td></tr>
+        <tr><td><myvar>${HIST...}</myvar></td>        <td>History stuff</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <h2>Common Variables</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><myvar>${USER}</myvar></td>        <td>Username</td></tr>
+        <tr><td><myvar>${EDITOR}</myvar></td>      <td>Default editor program</td></tr>
+        <tr><td><myvar>${http_proxy}</myvar></td>  <td>HTTP proxy (e.g. http://username:password@hostname:port)</td></tr>
+        <tr><td><myvar>${https_proxy}</myvar></td> <td>HTTPS proxy (e.g. http://username:password@hostname:port)</td></tr>
+        <tr><td><myvar>${ftp_proxy}</myvar></td>   <td>FTP proxy (e.g. http://username:password@hostname:port)</td></tr>
+        <tr><td><myvar>${no_proxy}</myvar></td>    <td>Non-proxied hosts (e.g. 127.*.*.*,localhost)</td></tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion">Shell Parameter Expansion</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><myvar>${#var}</myvar></td>
+          <td>Length of <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${!var}</myvar></td>
+          <td>Value of variable named in <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${!var*}</myvar></td>
+          <td>Single string with all variables beginning with var</td>
+        </tr>
+        <tr>
+          <td><myvar>${!var@}</myvar></td>
+          <td>Separate strings with all variables beginning with var</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var:<myinput>int</myinput>}</myvar></td>
+          <td>Substring of <myvar>${var}</myvar> starting at position <myinput>int</myinput> (first is 0)</td>
+        </tr>
+        <tr>
+          <td><myvar>${var:<myinput>int1</myinput>:<myinput>int2</myinput>}</myvar></td>
+          <td>Substring of <myvar>${var}</myvar> starting at position <myinput>int1</myinput> and containing <myinput>int2</myinput> characters (first is 0)</td>
+        </tr>
+        <tr>
+          <td><myvar>${var:<myinput>int1</myinput>:-<myinput>int2</myinput>}</myvar></td>
+          <td>Substring of <myvar>${var}</myvar> starting at position <myinput>int1</myinput> and ending <myinput>int2</myinput> characters from end (first is 0)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var=<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> not set, set to <myinput>str</myinput>; evaluates to <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><myvar>${var:=<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> empty or not set, set to <myinput>str</myinput>; evaluates to <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><myvar>${var-<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> not set, <myinput>str</myinput>, else <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><myvar>${var:-<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> empty or not set, <myinput>str</myinput>, else <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><myvar>${var+<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> set, <myinput>str</myinput>, else empty string</td>
+        </tr>
+        <tr>
+          <td><myvar>${var:+<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> set and not empty, <myinput>str</myinput>, else empty string</td>
+        </tr>
+        <tr>
+          <td><myvar>${var?<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> not set, print <myinput>str</myinput> and exit 1, else <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><myvar>${var:?<myinput>str</myinput>}</myvar></td>
+          <td>If <myvar>${var}</myvar> empty or not set, print <myinput>str</myinput> and exit 1, else <myvar>${var}</myvar></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var#<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with shortest leading match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var##<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with longest leading match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var%<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with shortest trailing match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var%%<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with longest trailing match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var/<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with first match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var/<myinput>pattern</myinput>/<myinput>str</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with first match of <myinput>pattern</myinput> replaced with <myinput>str</myinput></td>
+        </tr>
+        <tr>
+          <td><myvar>${var//<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with all matches of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var//<myinput>pattern</myinput>/<myinput>str</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with all matches of <myinput>pattern</myinput> replaced with <myinput>str</myinput></td>
+        </tr>
+        <tr>
+          <td><myvar>${var/#<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with shortest leading match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var/#<myinput>pattern</myinput>/<myinput>str</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with shortest leading match of <myinput>pattern</myinput> replaced with <myinput>str</myinput></td>
+        </tr>
+        <tr>
+          <td><myvar>${var/%<myinput>pattern</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with shortest trailing match of <myinput>pattern</myinput> removed</td>
+        </tr>
+        <tr>
+          <td><myvar>${var/%<myinput>pattern</myinput>/<myinput>str</myinput>}</myvar></td>
+          <td><myvar>${var}</myvar> with shortest trailing match of <myinput>pattern</myinput> replaced with <myinput>str</myinput></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var^}</myvar></td>
+          <td><myvar>${var}</myvar> with first character replaced with upper case</td>
+        </tr>
+        <tr>
+          <td><myvar>${var^^}</myvar></td>
+          <td><myvar>${var}</myvar> with all characters replaced with upper case</td>
+        </tr>
+        <tr>
+          <td><myvar>${var,}</myvar></td>
+          <td><myvar>${var}</myvar> with first character replaced with lower case</td>
+        </tr>
+        <tr>
+          <td><myvar>${var,,}</myvar></td>
+          <td><myvar>${var}</myvar> with all characters replaced with lower case</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Arithmetic-Expansion">Arithmetic Expansion</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>declare -i <myvar>var</myvar></td>
+          <td>Integer variable declaration</td>
+        </tr>
+        <tr>
+          <td><myinput>expression</myinput></td>
+          <td>Expressions may contain
+            <ul>
+              <li>Literal integers</li>
+              <li>Integer variables</li>
+              <li>Variables containing integers</li>
+              <li>Operators</li>
+              <li>Parentheses</li>
+              <li>Commas (for separate statements)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            (( <myinput>expression</myinput> ))<br>
+            let "<myinput>expression</myinput>"
+          </td>
+          <td>Evaluates expression; if value of last statement was 0, returns 1, otherwise returns 0</td>
+        </tr>
+        <tr>
+          <td>
+            $(( <myinput>expression</myinput> ))<br>
+            $[ <myinput>expression</myinput> ]<br>
+          </td>
+          <td>Value of last statement in expression (after performing evaluation)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>(( <myvar>var</myvar> <myinput>assignment</myinput> <myinput>expression</myinput> ))</td>
+          <td>Assign value of expression to <myvar>${var}</myvar>; valid values for <myinput>assignment</myinput> are: =, +=, -=, *=, /=, %=, &gt;&gt;=, &lt;&lt;=, &amp;=, ^=, and |=.
+          </td>
+        </tr>
+        <tr>
+          <td>(( ++<myvar>var</myvar> ))</td>
+          <td>Pre-increment</td>
+        </tr>
+        <tr>
+          <td>(( <myvar>var</myvar>++ ))</td>
+          <td>Post-increment</td>
+        </tr>
+        <tr>
+          <td>(( --<myvar>var</myvar> ))</td>
+          <td>Pre-decrement</td>
+        </tr>
+        <tr>
+          <td>(( <myvar>var</myvar>-- ))</td>
+          <td>Post-decrement</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>(( <myinput>expression</myinput> <myinput>operator</myinput> <myinput>expression</myinput> ))</td>
+          <td>Evaluate expression; valid values for <myinput>operator</myinput> are: +, -, *, /, %, &gt;&gt;, &lt;&lt;, &amp;, ^, |, **, &amp;&amp;, ||, ==, !=, &gt;, &lt;, &gt;=, and &lt;=.</td>
+        </tr>
+        <tr>
+          <td>(( ~<myinput>expression</myinput> ))</td>
+          <td>Bitwise negation (using two's complement notation)</td>
+        </tr>
+        <tr>
+          <td>(( <myinput>expression</myinput> ? <myinput>expression</myinput> : <myinput>expression</myinput> ))</td>
+          <td>Test and evaluate (0 is false, anything else is true)</td>
+        </tr>
+        <tr>
+          <td>(( ! (<myinput>expression</myinput>) ))</td>
+          <td>Logical negation</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>(( 0x<myinput>int</myinput> ))</td>
+          <td>Convert <myinput>int</myinput> from hexadecimal to decimal (can use 0X as well)</td>
+        </tr>
+        <tr>
+          <td>(( 0<myinput>int</myinput> ))</td>
+          <td>Convert <myinput>int</myinput> from octal to decimal (can use more than one leading 0)</td>
+        </tr>
+        <tr>
+          <td>(( <myinput>int1</myinput>#<myinput>int2</myinput> ))</td>
+          <td>Convert <myinput>int2</myinput> from base <myinput>int1</myinput> to decimal (base can be from 2 to 64)</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Command-Substitution">Command Substitution</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>`<myinput>command</myinput>`</td>
+          <td>Command substitution expanded to output of <myinput>command</myinput></td>
+        </tr>
+        <tr>
+          <td>$(<myinput>command</myinput>)</td>
+          <td>Command substitution expanded to output of <myinput>command</myinput></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Process-Substitution">Process Substitution</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&gt;(<myinput>command</myinput>)</td>
+          <td>Process substitution expanded to file to which input to <myinput>command</myinput> can be written</td>
+        </tr>
+        <tr>
+          <td>&lt;(<myinput>command</myinput>)</td>
+          <td>Process substitution expanded to file from which output from <myinput>command</myinput> can be read</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion">Filename Expansion</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>*</td>
+          <td>Match any group of characters</td>
+        </tr>
+        <tr>
+          <td>?</td>
+          <td>Match any single character</td>
+        </tr>
+        <tr>
+          <td>[<myinput>str</myinput>]</td>
+          <td>Match any character in <myinput>str</myinput>
+            <ul>
+              <li>"-" must be first or last</li>
+              <li>"]" must be first</li>
+              <li>leading "^" or "!" inverts match</li>
+              <li>ranges can be specified using "<myinput>char1</myinput>-<myinput>char2</myinput>" (ASCII value of <myinput>char1</myinput> must be smaller than that of <myinput>char2</myinput>)</li>
+              <li>can use character [:<myinput>class</myinput>:] (alnum, alpha, ascii, blank, cntrl, digit, graph, lower, print, punct, space, upper, word, xdigit)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>?(<myinput>str1</myinput>|<myinput>str2</myinput>|<myinput>str3</myinput>)</td>
+          <td>Matches zero or one occurrence of the given patterns (requires "<a href="http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html">shopt</a> -s extglob")</td>
+        </tr>
+        <tr>
+          <td>*(<myinput>str1</myinput>|<myinput>str2</myinput>|<myinput>str3</myinput>)</td>
+          <td>Matches zero or more occurrences of the given patterns (requires "<a href="http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html">shopt</a> -s extglob")</td>
+        </tr>
+        <tr>
+          <td>+(<myinput>str1</myinput>|<myinput>str2</myinput>|<myinput>str3</myinput>)</td>
+          <td>Matches one or more occurrences of the given patterns (requires "<a href="http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html">shopt</a> -s extglob")</td>
+        </tr>
+        <tr>
+          <td>@(<myinput>str1</myinput>|<myinput>str2</myinput>|<myinput>str3</myinput>)</td>
+          <td>Matches one of the given patterns (requires "<a href="http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html">shopt</a> -s extglob")</td>
+        </tr>
+        <tr>
+          <td>!(<myinput>str1</myinput>|<myinput>str2</myinput>|<myinput>str3</myinput>)</td>
+          <td>Matches anything except one of the given patterns (requires "<a href="http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html">shopt</a> -s extglob")</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td>For filename expansion "/" and leading "." are not matched by default ("see <a href="http://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html">shopt</a> -s dotglob globstar").</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions">Conditional Expressions</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[[ ]]</td>
+          <td>
+            <ul>
+              <li>Allowed operators: ( ), !, &amp;&amp;, ||, ==, =, !=, =~, &lt;, &gt;, -eq, -ne, -lt, -gt, -le, and -ge</li>
+              <li>No filename expansion or word splitting applied to arguments, no need to escape &lt; and &gt;</li>
+              <li>For ==, =, and != pattern matching is applied to unquoted parts of RHS</li>
+              <li>For =~ ERE matching is applied to unquoted parts of RHS (invalid regex returns 2)</li>
+              <li>Grouping using ( ), !, &amp;&amp;, and || (in that order of preference)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>[ ] or test</td>
+          <td>
+            <ul>
+              <li>Allowed operators: !, ==, =, !=, &lt;, &gt;, -eq, -ne, -lt, -gt, -le, and -ge (-a, -o, and -n are deprecated)</li>
+              <li>Filename expansion and word splitting applied to unquoted arguments</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>(( ))</td>
+          <td>
+            <ul>
+              <li>Arithmetic expressions</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=test>Strings<br>[[ ]]</th>
+          <th class=test>Strings<br>[ ] or test</th>
+          <th class=test>Integers<br>[[ ]], [ ], or test</th>
+          <th class=test>Integers<br>(( ))</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr rowspan=2>
+          <td>==</td>
+          <td>==</td>
+          <td><br></td>
+          <td><br></td>
+          <td rowspan=2>Equal (for [[ ]] pattern matching applied to RHS)</td>
+        </tr>
+        <tr rowspan=2>
+          <td>=</td>
+          <td>=</td>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>!=</td>
+          <td>!=</td>
+          <td><br></td>
+          <td><br></td>
+          <td>Not equal (for [[ ]] pattern matching applied to RHS)</td>
+        </tr>
+        <tr>
+          <td>=~</td>
+          <td><br></td>
+          <td><br></td>
+          <td><br></td>
+          <td>Equal (for [[ ]] ERE expansion applied to RHS)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+          <td>-eq</td>
+          <td>==</td>
+          <td>Equal</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+          <td>-ne</td>
+          <td>!=</td>
+          <td>Not equal</td>
+        </tr>
+        <tr>
+          <td>&lt;</td>
+          <td>\&lt;</td>
+          <td>-lt</td>
+          <td>&lt;</td>
+          <td>Less than</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+          <td>-le</td>
+          <td>&lt;=</td>
+          <td>Less than or equal</td>
+        </tr>
+        <tr>
+          <td>&gt;</td>
+          <td>\&gt;</td>
+          <td>-gt</td>
+          <td>&gt;</td>
+          <td>Greater than</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+          <td>-ge</td>
+          <td>&gt;=</td>
+          <td>Greater than or equal</td>
+        </tr>
+        <tr>
+          <td>-z</td>
+          <td>-z</td>
+          <td><br></td>
+          <td><br></td>
+          <td>Empty</td>
+        </tr>
+        <tr>
+          <td>-n</td>
+          <td>-n</td>
+          <td><br></td>
+          <td><br></td>
+          <td>Not empty</td>
+        </tr>
+        <tr>
+          <td>!</td>
+          <td>!</td>
+          <td>!</td>
+          <td>! (<myinput>expression</myinput>)</td>
+          <td>Logical negation</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[[ -e <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> exists</td>
+        </tr>
+        <tr>
+          <td>[[ -a <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> exists</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ -r <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is readable</td>
+        </tr>
+        <tr>
+          <td>[[ -w <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is writeable</td>
+        </tr>
+        <tr>
+          <td>[[ -x <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is executable</td>
+        </tr>
+        <tr>
+          <td>[[ -g <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> has sgid flag set</td>
+        </tr>
+        <tr>
+          <td>[[ -u <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> has suid flag set</td>
+        </tr>
+        <tr>
+          <td>[[ -k <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> has sticky bit set</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ -f <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a regular file</td>
+        </tr>
+        <tr>
+          <td>[[ -d <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a directory</td>
+        </tr>
+        <tr>
+          <td>[[ -L <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a symbolic link</td>
+        </tr>
+        <tr>
+          <td>[[ -h <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a symbolic link</td>
+        </tr>
+        <tr>
+          <td>[[ -b <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a block device</td>
+        </tr>
+        <tr>
+          <td>[[ -c <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a character device</td>
+        </tr>
+        <tr>
+          <td>[[ -p <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a pipe</td>
+        </tr>
+        <tr>
+          <td>[[ -S <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is a socket</td>
+        </tr>
+        <tr>
+          <td>[[ -t <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is an open terminal device</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ -O <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is owned by user</td>
+        </tr>
+        <tr>
+          <td>[[ -G <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> group includes user</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ -s <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> is not empty</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ -N <myinput>file</myinput> ]] </td>
+          <td><myinput>file</myinput> has been modified since last read</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ <myinput>file1</myinput> -nt <myinput>file2</myinput> ]] </td>
+          <td><myinput>file1</myinput> is newer than <myinput>file2</myinput></td>
+        </tr>
+        <tr>
+          <td>[[ <myinput>file1</myinput> -ot <myinput>file2</myinput> ]] </td>
+          <td><myinput>file1</myinput> is older than <myinput>file2</myinput></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ <myinput>file1</myinput> -ef <myinput>file2</myinput> ]] </td>
+          <td><myinput>file1</myinput> and <myinput>file2</myinput> are the same file</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>[[ ! <myinput>test</myinput> ]]</td>
+          <td>Logical negation</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2><a href="http://www.gnu.org/software/bash/manual/bash.html#Arrays">Arrays</a></h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>declare -a <myvar>var</myvar></td>
+          <td>Array variable declaration (indexed with integers, first is 0)</td>
+        </tr>
+        <tr>
+          <td>declare -A <myvar>var</myvar></td>
+          <td>Associative array variable declaration (indexed with strings, arbitrary element order)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>var</myvar>[<myinput>index</myinput>]=<myinput>str</myinput></td>
+          <td>Array declaration and assignment of element <myinput>index</myinput></td>
+        </tr>
+        <tr>
+          <td><myvar>var</myvar>=( [<myinput>index</myinput>]=<myinput>str</myinput> )</td>
+          <td>Array declaration and assignment of element <myinput>index</myinput></td>
+        </tr>
+        <tr>
+          <td><myvar>var</myvar>=( [<myinput>index1</myinput>]=<myinput>str1</myinput> [<myinput>index2</myinput>]=<myinput>str2</myinput> [<myinput>index3</myinput>]=<myinput>str3</myinput> )</td>
+          <td>Array declaration and assignment of multiple elements (integer indices may be non-contiguous)</td>
+        </tr>
+        <tr>
+          <td><myvar>var</myvar>=( <myinput>str1</myinput> <myinput>str2</myinput> <myinput>str2</myinput> )</td>
+          <td>Array declaration and assignment of all elements (not valid for associative arrays)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>unset <myvar>var</myvar>[<myinput>index</myinput>]</td>
+          <td>Remove element <myinput>index</myinput></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${#var[*]}</myvar></td>
+          <td>Number of elements</td>
+        </tr>
+        <tr>
+          <td><myvar>${#var[@]}</myvar></td>
+          <td>Number of elements</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${#var[<myinput>index</myinput>]}</myvar></td>
+          <td>Length of element <myinput>index</myinput></td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${!var[*]}</myvar></td>
+          <td>Single string with all indices</td>
+        </tr>
+        <tr>
+          <td><myvar>${!var[@]}</myvar></td>
+          <td>Separate strings for all indices</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var[*]}</myvar></td>
+          <td>Single string with all elements</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[*]:<myinput>int</myinput>}</myvar></td>
+          <td>Single string with subset of array starting with element <myinput>int</myinput> (for associative arrays first is 1)</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[*]:<myinput>int1</myinput>:<myinput>int2</myinput>}</myvar></td>
+          <td>Single string with subset of array starting with element <myinput>int1</myinput> and containing <myinput>int2</myinput> elements (for associative arrays first is 1)</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[*]<myinput>substitution</myinput>}</myvar></td>
+          <td>Single string with all elements with parameter substitution (starting with "#", "%", "/", "^", or ","; others ignored)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var[@]}</myvar></td>
+          <td>Separate strings for all elements</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[@]:<myinput>int</myinput>}</myvar></td>
+          <td>Separate strings for subset of array starting with element <myinput>int</myinput> (for associative arrays first is 1)</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[@]:<myinput>int1</myinput>:<myinput>int2</myinput>}</myvar></td>
+          <td>Separate strings for subset of array starting with element <myinput>int1</myinput> and containing <myinput>int2</myinput> elements (for associative arrays first is 1)</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[@]<myinput>substitution</myinput>}</myvar></td>
+          <td>Separate strings for all elements with parameter substitution (starting with "#", "%", "/", "^", or ","; others ignored)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myvar>${var[<myinput>index</myinput>]}</myvar></td>
+          <td>Element <myinput>index</myinput></td>
+        </tr>
+        <tr>
+          <td><myvar>${var[<myinput>index</myinput>]<myinput>substitution</myinput>}</myvar></td>
+          <td>Element <myinput>index</myinput> with parameter substitution (starting with "=", "-", "+", "?", ":", "#", "%", "/", "^", or ",")</td>
+        </tr>
+        <tr>
+          <td><myvar>${var[-<myinput>int</myinput>]}</myvar></td>
+          <td>Element <myinput>int</myinput>-1 positions from end (last is <myvar>${var[-1]}</myvar>, not valid for associative arrays)</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <h2>Other Constructs</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th class=expression>Expression</th>
+          <th class=meaning>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{ <myinput>command1</myinput>; <myinput>command2</myinput>; <myinput>command2</myinput>; }</td>
+          <td>Command group (space after first brace, ";" or new line between commands and after last command)</td>
+        </tr>
+        <tr>
+          <td>(<myinput>command1</myinput>;<myinput>command2</myinput>;<myinput>command3</myinput>)</td>
+          <td>Command group run in subshell (";" or new line between commands)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td><myinput>command</myinput> &lt;&lt;<myinput>delimiter</myinput><br><myinput>str1</myinput><br><myinput>str2</myinput><br><myinput>str3</myinput><br><myinput>delimiter</myinput></td>
+          <td>Provide multiple lines of input to <myinput>command</myinput></td>
+        </tr>
+        <tr>
+          <td><myinput>command</myinput> -&lt;&lt;<myinput>delimiter</myinput><br><myinput>str1</myinput><br><myinput>str2</myinput><br><myinput>str3</myinput><br><myinput>delimiter</myinput></td>
+          <td>Provide multiple lines of input to <myinput>command</myinput>, stripping leading tabs</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>declare -i <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare integer variable</td>
+        </tr>
+        <tr>
+          <td>declare -a <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare array variable (integer indices)</td>
+        </tr>
+        <tr>
+          <td>declare -A <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare associative array variable (string indices)</td>
+        </tr>
+        <tr>
+          <td>declare -r <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare read only variable</td>
+        </tr>
+        <tr>
+          <td>declare -l <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare lower-case variable</td>
+        </tr>
+        <tr>
+          <td>declare -u <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare upper-case variable</td>
+        </tr>
+        <tr>
+          <td>declare -x <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare exported variable</td>
+        </tr>
+        <tr>
+          <td>declare -g <myvar>var</myvar>=<myinput>str</myinput></td>
+          <td>Declare global scope variable from function (by default declare in a function yields local variables)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>read -a <myvar>var</myvar></td>
+          <td>Read from stdin into array</td>
+        </tr>
+        <tr>
+          <td>read -d <myinput>char</myinput> <myvar>var</myvar></td>
+          <td>Read from stdin and end on <myinput>char</myinput></td>
+        </tr>
+        <tr>
+          <td>read -n <myinput>int</myinput> <myvar>var</myvar></td>
+          <td>Read from stdin and end after <myinput>int</myinput> characters or new line</td>
+        </tr>
+        <tr>
+          <td>read -N <myinput>int</myinput> <myvar>var</myvar></td>
+          <td>Read from stdin and end after <myinput>int</myinput> characters or EOF</td>
+        </tr>
+        <tr>
+          <td>read -p <myinput>string</myinput> <myvar>var</myvar></td>
+          <td>Read from stdin displaying prompt without trailing new line (ignored if input not terminal)</td>
+        </tr>
+        <tr>
+          <td>read -s <myvar>var</myvar></td>
+          <td>Read from stdin without displaying typed characters</td>
+        </tr>
+        <tr>
+          <td>read -t <myinput>number</myinput> <myvar>var</myvar></td>
+          <td>Read from stdin and timeout after <myinput>number</myinput> seconds (floating point, ignored if input not terminal)</td>
+        </tr>
+        <tr>
+          <td><br></td>
+          <td><br></td>
+        </tr>
+        <tr>
+          <td>Order of expansion</td>
+          <td>
+            <ul>
+              <li>Brace expansion</li>
+              <li>Left to right:</li>
+              <ul>
+                <li>Tilde expansion</li>
+                <li>Parameter and variable expansion</li>
+                <li>Arithmetic expansion</li>
+                <li>Command substitution</li>
+                <li>Process substitution</li>
+              </ul>
+              <li>Word splitting</li>
+              <li>Filename expansion</li>
+              <li>Quote removal</li>
+            </ul>
+          <td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </body>
+</html>
